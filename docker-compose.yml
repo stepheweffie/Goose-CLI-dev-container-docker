@@ -7,9 +7,9 @@ services:
       dockerfile: Dockerfile
     container_name: goose-dev
     volumes:
-      - .:/workspace
+      - .:/home/goose/workspace
       - goose-config:/home/goose/.config
-    working_dir: /workspace
+    working_dir: /home/goose/workspace
     stdin_open: true
     tty: true
     environment:

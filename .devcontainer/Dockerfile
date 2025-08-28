@@ -44,11 +44,11 @@ ENV PATH="/home/goose/.local/bin:${PATH}"
 # Install Goose CLI using the official installation script
 RUN curl -fsSL https://github.com/block/goose/releases/download/stable/download_cli.sh | CONFIGURE=false bash
 
-# Create a workspace directory
-RUN mkdir -p /workspace
+# Create a workspace directory in the user's home
+RUN mkdir -p /home/goose/workspace
 
 # Set the working directory to workspace
-WORKDIR /workspace
+WORKDIR /home/goose/workspace
 
 # Add a script to help with initial setup
 RUN echo '#!/bin/bash\n\

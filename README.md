@@ -1,13 +1,15 @@
 # Goose Docker Environment
 
-This project provides a Docker setup for running [Goose](https://block.github.io/goose/docs/getting-started/installation), an AI-powered developer assistant.
+This project provides a Docker setup for running [Goose](https://block.github.io/goose/docs/getting-started/installation), an AI-powered developer assistant. Perfect for development containers and isolated environments.
 
 ## What's Included
 
-- **Goose CLI**: Installed and ready to use
-- **Ubuntu 22.04**: Clean base environment
-- **Development tools**: Git, Python3, build essentials
-- **Easy scripts**: Simple commands to build and run
+- **Goose CLI v1.6.0**: Latest version installed and ready to use
+- **Ubuntu 22.04**: Clean, secure base environment
+- **Development tools**: Git, Python3, build essentials, vim, nano, zsh
+- **Non-root user**: Runs as `goose` user for security
+- **Easy scripts**: Simple commands to build, run, and connect
+- **Persistent config**: Your Goose configuration is preserved between runs
 
 ## Getting Started
 
@@ -86,17 +88,64 @@ According to the documentation, Goose works best with Claude 4 models and suppor
 - **Tetrate Agent Router** (with OAuth)
 - And many more...
 
+## Container Structure
+
+```
+/home/goose/
+├── workspace/          # Your project files (mounted from host)
+├── .config/goose/      # Goose configuration (persistent volume)
+├── .local/bin/goose    # Goose CLI executable
+└── setup-info.sh       # Helper script with setup information
+```
+
+## Available Commands
+
+### Host Commands
+- `./run.sh` - Build and start the Goose container
+- `./connect.sh` - Connect to the running container
+- `docker-compose down` - Stop and remove the container
+- `docker-compose logs goose` - View container logs
+- `docker-compose exec goose bash` - Connect to container (alternative)
+
+### Container Commands
+- `goose configure` - Configure your LLM provider
+- `goose session` - Start an interactive Goose session
+- `goose --help` - Show all available Goose commands
+- `goose --version` - Show Goose version (currently v1.6.0)
+- `goose update` - Update Goose to the latest version
+- `goose-help` - Show container setup information
+- `ll` - List files with details (alias for `ls -la`)
+
 ## Configuration
 
 - Goose config is stored in `~/.config/goose/config.yaml`
-- The container mounts your workspace for easy file access
+- The container mounts your workspace at `/home/goose/workspace`
+- Configuration is preserved in a Docker volume between container restarts
 - Extensions and settings are shared between Goose CLI and Desktop (if you use both)
+
+## Recent Updates
+
+- **Fixed workspace permissions**: Resolved Docker build issue where workspace directory creation failed
+- **Updated paths**: Changed workspace location to `/home/goose/workspace` for proper user permissions
+- **Enhanced security**: Container runs as non-root `goose` user
+- **Improved documentation**: Added comprehensive command reference and troubleshooting
 
 ## Troubleshooting
 
-- If you see keyring errors, set your API key as an environment variable instead
-- Make sure you have sufficient credits/quota with your chosen LLM provider
-- Check rate limits if you experience delays
+### Common Issues
+- **Docker build fails**: Make sure Docker is running and you have sufficient disk space
+- **Permission errors**: The container now runs as non-root user to avoid permission issues
+- **Keyring errors**: Set your API key as an environment variable instead of using keyring
+- **Rate limits**: Make sure you have sufficient credits/quota with your chosen LLM provider
+- **Connection issues**: Use `docker-compose logs goose` to view container logs
+
+### Rebuilding the Container
+If you encounter issues, try rebuilding:
+```bash
+docker-compose down
+docker-compose build --no-cache
+./run.sh
+```
 
 ## More Information
 
