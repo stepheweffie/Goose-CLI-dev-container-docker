@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  goose:
+    build:
+      context: .devcontainer
+      dockerfile: Dockerfile
+    container_name: goose-dev
+    volumes:
+      - .:/workspace
+      - goose-config:/home/goose/.config
+    working_dir: /workspace
+    stdin_open: true
+    tty: true
+    environment:
+      - TERM=xterm-256color
+    command: /bin/bash
+
+volumes:
+  goose-config:

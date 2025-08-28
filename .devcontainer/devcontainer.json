@@ -1,0 +1,16 @@
+{
+  "name": "Goose Development Environment",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "forwardPorts": [],
+  "postCreateCommand": "echo 'Goose DevContainer ready! Run goose --help to get started.'",
+  "remoteUser": "goose",
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  "mounts": [
+    "source=${localWorkspaceFolder}/../,target=/workspace,type=bind,consistency=cached"
+  ]
+}

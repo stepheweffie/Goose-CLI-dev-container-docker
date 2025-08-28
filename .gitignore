@@ -1,0 +1,32 @@
+# DevContainer build artifacts
+.devcontainer/build/
+
+# VS Code settings (optional - you may want to keep some)
+.vscode/
+*.code-workspace
+
+# Environment variables
+.env
+.env.local
+
+# API keys and secrets
+*.key
+*.pem
+secrets/
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# Container runtime
+.docker/
+
+# Goose configuration (if you want to keep it private)
+# Uncomment the next line if you don't want to commit goose config
+# .config/
